@@ -16,7 +16,10 @@
         android:theme="@style/Theme.AppChat"
         tools:targetApi="31">
         <activity
-            android:name=".listfriend"
+            android:name=".MessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListChatActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

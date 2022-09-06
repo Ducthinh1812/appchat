@@ -23,15 +23,16 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     EditText edtname;
     Button btnlogin;
+    public static String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnlogin=findViewById(R.id.btnLogin);
-        edtname=findViewById(R.id.edtname);
+        btnlogin=findViewById(R.id.btn_login);
+        edtname=findViewById(R.id.email);
         btnlogin.setOnClickListener(view -> {
             if(edtname.getText().toString().trim().equals("") ){
-                edtname.setError("Hãy nhập gmail của bạn.");
+                edtname.setError("Hãy nhập tên đăng nhập của bạn.");
             }
             else{
                 postlogin();
@@ -42,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Please Wait..");
         progressDialog.show();
-         String name= edtname.getText().toString().trim();
-        StringRequest request = new StringRequest(Request.Method.POST, "https://appsellrice.000webhostapp.com/login.php", new Response.Listener<String>() {
+       name= edtname.getText().toString().trim();
+        StringRequest request = new StringRequest(Request.Method.POST, "https://appsellrice.000webhostapp.com/appchat/login.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 if(response.equalsIgnoreCase("Đăng Nhập Thành Công")){
-                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), ListChatActivity.class);
+                    intent.putExtra("data",name);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                 }
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("name",name);
+                params.put("id",name);
                 return params;
 
             }

@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.appchat.Model.User;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,9 +32,10 @@ import java.util.Map;
 public class friendadapter extends RecyclerView.Adapter<friendadapter.friendHolder> {
 
     Context context;
-    ArrayList<messent> ArrayList;
-    String urlSp = "https://website1812.000webhostapp.com/Coffee/Sanpham.php";
-    public friendadapter(Context context, ArrayList<messent> ArrayList) {
+    ArrayList<User> ArrayList;
+    String urlSp = "https://appsellrice.000webhostapp.com/conexion.php";
+
+    public friendadapter(Context context, ArrayList<User> ArrayList) {
         this.context = context;
         this.ArrayList = ArrayList;
     }
@@ -41,15 +43,15 @@ public class friendadapter extends RecyclerView.Adapter<friendadapter.friendHold
     @NonNull
     @Override
     public friendadapter.friendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemfiend , parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemfiend, parent, false);
         return new friendadapter.friendHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull friendadapter.friendHolder holder, @SuppressLint("RecyclerView") int position) {
-        messent mes =ArrayList.get(position);
+        User mes = ArrayList.get(position);
 
-        holder.tvname.setText(mes.getFriend());
+        holder.tvname.setText(mes.getId());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +77,7 @@ public class friendadapter extends RecyclerView.Adapter<friendadapter.friendHold
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("TenSP",mes.getName());
+                        params.put("TenSP",mes.getId());
                         return params;
                     }
                 };
@@ -95,9 +97,10 @@ public class friendadapter extends RecyclerView.Adapter<friendadapter.friendHold
     public class friendHolder extends RecyclerView.ViewHolder {
         TextView tvname;
         CardView cardView;
+
         public friendHolder(@NonNull View itemView) {
             super(itemView);
-            cardView= itemView.findViewById(R.id.CarviewSP);
+            cardView = itemView.findViewById(R.id.CarviewSP);
             tvname = (TextView) itemView.findViewById(R.id.tvname);
 
         }
